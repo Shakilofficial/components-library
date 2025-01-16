@@ -4,6 +4,8 @@ import { createBrowserRouter } from "react-router-dom";
 import { UserPaths } from "./UserRutes";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import { AdminPaths } from "./AdminRoutes";
+import { authPaths } from "./AuthRoutes";
+import AuthLayout from "@/layouts/AuthLayout";
 
 const router = createBrowserRouter([
   {
@@ -16,12 +18,12 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: routeGenerator(AdminPaths),
   },
-  /* 
+  
     {
       path: '/auth',
       element: <AuthLayout />,
-      children: routeGenerator(facultyPaths),
-    }, */
+      children: routeGenerator(authPaths),
+    },
 ]);
 
 export default router;
