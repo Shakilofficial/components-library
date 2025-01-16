@@ -40,7 +40,7 @@ const ForgetPassword = () => {
   return (
     <div className="space-y-6">
       <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-bold">Forget password</h1>
+        <h1 className="text-2xl md:3xl font-bold">Forget password</h1>
         <p className="text-muted-foreground">
           Enter your email to reset your password
         </p>
