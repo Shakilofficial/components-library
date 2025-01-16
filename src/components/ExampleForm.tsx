@@ -69,7 +69,9 @@ export default function Home() {
 
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-3xl font-bold mb-6">Reusable Form Components Demo</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">
+        Reusable Form Components Demo
+      </h1>
       <div className="max-w-md mx-auto">
         <Form<FormValues>
           onSubmit={onSubmit}

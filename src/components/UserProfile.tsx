@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-import { User } from "lucide-react";
+import { Link, User } from "lucide-react";
 
 interface UserProfileProps {
   user?: {
@@ -51,8 +51,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
           </>
         ) : (
           <>
-            <DropdownMenuItem>Log in</DropdownMenuItem>
-            <DropdownMenuItem>Sign up</DropdownMenuItem>
+            <Link to="/auth/login">Log in</Link>
           </>
         )}
       </DropdownMenuContent>

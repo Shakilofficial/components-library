@@ -39,7 +39,7 @@ const Navbar = ({ user }: NavbarProps) => {
               </Button>
             </SheetTrigger>
             <SheetContent side="right">
-              <SheetTitle className="sr-only">Menu</SheetTitle>
+              <SheetTitle className="mt-6 text-center">User Menu</SheetTitle>
               <SheetDescription className="sr-only">
                 Navigate through the available pages.
               </SheetDescription>

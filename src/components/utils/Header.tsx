@@ -72,11 +72,11 @@ const Header = ({ title, subtitle, className }: HeaderProps) => {
           <rect width="100%" height="100%" fill="url(#doodle-pattern)" />
         </svg>
       </div>
-      <h2 className="text-2xl font-extrabold tracking-tight md:text-4xl lg:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary relative">
+      <h2 className="text-2xl font-extrabold tracking-tight md:text-3xl lg:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary relative">
         {title}
       </h2>
       {subtitle && (
-        <p className="mt-4 text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-[85%] mx-auto">
+        <p className="mt-4 text-lg md:text-xl text-muted-foreground max-w-[85%] mx-auto">
           {subtitle}
         </p>
       )}
