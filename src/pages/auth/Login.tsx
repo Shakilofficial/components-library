@@ -1,45 +1,61 @@
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import Loading from "@/components/feedback/Loading";
+import Form from "@/components/form/Form";
+import TextInput from "@/components/form/TextInput";
+import { useLoginMutation } from "@/redux/features/auth/authApi";
+import { setUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch } from "@/redux/hook";
+import { verifyToken } from "@/utils/verifyToken";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { z } from "zod";
 
-const formSchema = z.object({
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters long.",
-  }),
+const loginSchema = z.object({
+  userId: z.string().min(1, "User ID is required"),
+  password: z.string().min(6, "Password must be at least 6 characters long"),
 });
 
 const Login = () => {
-  const { toast } = useToast();
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [login] = useLoginMutation();
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    toast({
-      title: "Login Attempt",
-      description: `Email: ${values.email}`,
-    });
-    // Here you would typically handle the login logic
-  }
+  const handleSubmit = async (data: { userId: string; password: string }) => {
+    const toastId = toast.loading(<Loading size="sm" text="Logging in..." />);
+
+    try {
+      const userInfo = {
+        id: data.userId,
+        password: data.password,
+      };
+
+      // Call login mutation
+      const res = await login(userInfo).unwrap();
+
+      // Verify token and extract user info
+      const user = verifyToken(res.data.accessToken);
+
+      // Dispatch user info and token to Redux
+      dispatch(setUser({ user, token: res.data.accessToken }));
+
+      toast.success("Logged in successfully!", { id: toastId, duration: 2000 });
+
+      // Redirect user based on role
+      if (user.role === "admin") {
+        navigate("/dashboard");
+      } else if (user.role === "student") {
+        navigate("/");
+      } else {
+        // Handle if role is not found or invalid
+        toast.error("Invalid user role", { id: toastId });
+        navigate("/auth/login");
+      }
+    } catch (err) {
+      toast.error("Login failed. Please check your credentials.", {
+        id: toastId,
+        duration: 2000,
+      });
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -49,42 +65,23 @@ const Login = () => {
           Enter your credentials to access your account
         </p>
       </div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="name@example.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Enter your password"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className="w-full">
-            Log in
-          </Button>
-        </form>
+      {/* Form */}
+      <Form
+        schema={loginSchema}
+        onSubmit={handleSubmit}
+        className="space-y-4"
+        submitText="Log in"
+      >
+        <TextInput
+          name="userId"
+          label="User ID"
+          placeholder="Enter your User ID"
+        />
+        <TextInput
+          name="password"
+          label="Password"
+          placeholder="Enter your password"
+        />
       </Form>
       <div className="text-center space-y-2">
         <Link

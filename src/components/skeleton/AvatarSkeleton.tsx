@@ -4,7 +4,7 @@ interface AvatarSkeletonProps {
   size?: string;
 }
 
-const AvatarSkeleton = ({ size = "h-12 w-12" }: AvatarSkeletonProps) => {
+const AvatarSkeleton = ({ size = "h-8 w-8" }: AvatarSkeletonProps) => {
   return <Skeleton className={`${size} rounded-full`} />;
 };
 

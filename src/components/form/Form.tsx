@@ -1,44 +1,53 @@
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
-import { FieldValues, FormProvider, useForm } from "react-hook-form";
+import {
+  FieldValues,
+  FormProvider,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
 import { z } from "zod";
 
 interface FormProps<T extends FieldValues> {
   children: React.ReactNode;
-  onSubmit: (data: T) => void;
+  onSubmit: SubmitHandler<T>;
   schema: z.ZodType<T>;
   defaultValues?: Partial<T>;
   submitText?: string;
   className?: string;
 }
 
-export function Form<T extends FieldValues>({
+const Form = <T extends FieldValues>({
   children,
   onSubmit,
   schema,
-  defaultValues,
+  defaultValues = {},
   submitText = "Submit",
   className = "",
-  ...props
-}: FormProps<T>) {
+}: FormProps<T>) => {
   const methods = useForm<T>({
     resolver: zodResolver(schema),
     defaultValues,
   });
 
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
+
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(onSubmit)}
-        className={`space-y-6 ${className}`} // Apply the className prop here
-        {...props}
+        onSubmit={handleSubmit(onSubmit)}
+        className={`space-y-6 ${className}`}
       >
         {children}
-        <Button type="submit" disabled={methods.formState.isSubmitting}>
-          {methods.formState.isSubmitting ? "Submitting..." : submitText}
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Submitting..." : submitText}
         </Button>
       </form>
     </FormProvider>
   );
-}
+};
+
+export default Form;

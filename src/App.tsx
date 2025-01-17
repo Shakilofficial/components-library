@@ -1,4 +1,3 @@
-import ExampleForm from "./components/ExampleForm";
 import Error from "./components/feedback/Error";
 import Loading from "./components/feedback/Loading";
 import Spinner from "./components/feedback/Spinner";
@@ -153,9 +152,6 @@ const App = () => {
             <GridSkeleton />
           </div>
         </div>
-      </Container>
-      <Container>
-        <ExampleForm />
       </Container>
     </div>
   );
