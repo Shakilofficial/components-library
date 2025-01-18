@@ -29,7 +29,7 @@ const Header = ({ onMenuClick, user }: DashboardHeaderProps) => {
         <div className="mr-4 hidden md:flex">
           <h3 className="text-lg font-bold">Dashboard</h3>
         </div>
-        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end px-2">
           <div className="w-full flex-1 md:w-auto md:flex-none">
             <Input placeholder="Search..." className="max-w-[300px]" />
           </div>

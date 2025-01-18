@@ -23,10 +23,10 @@ const NavItems = ({ className }: NavItemsProps) => {
           key={item.label}
           to={item.path}
           className={cn(
-            "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
+            "flex items-center font-lg px-3 py-2 font-medium transition-colors",
             pathname === item.path
-              ? "bg-primary text-primary-foreground"
-              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              ? "text-primary"
+              : "text-muted-foreground hover:text-foreground"
           )}
         >
           <item.icon className="w-4 h-4 mr-2" />
