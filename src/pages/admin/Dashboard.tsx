@@ -1,7 +1,12 @@
+import LoginForm from "@/components/example/LoginForm";
+import Container from "@/components/utils/Container";
+
 const Dashboard = () => {
   return (
     <div>
-      <h1>This is the Dashboard component</h1>
+      <Container>
+        <LoginForm />
+      </Container>
     </div>
   );
 };
