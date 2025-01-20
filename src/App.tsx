@@ -1,6 +1,7 @@
 import Error from "./components/feedback/Error";
 import Loading from "./components/feedback/Loading";
 import Spinner from "./components/feedback/Spinner";
+import { Reviews } from "./components/Reviews";
 import ArticleSkeleton from "./components/skeleton/ArticleSkeleton";
 import CardSkeleton from "./components/skeleton/CardSkeleton";
 import CommentSkeleton from "./components/skeleton/CommentSkeleton";
@@ -153,6 +154,8 @@ const App = () => {
           </div>
         </div>
       </Container>
+      {/*  <Testimonial /> */}
+      <Reviews />
     </div>
   );
 };
