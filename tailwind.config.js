@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-    darkMode: ["class"],
-    content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
+  darkMode: ["class"],
+  content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
   	extend: {
   		borderRadius: {
@@ -49,6 +49,38 @@ export default {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
+  			}
+  		},
+  		keyframes: {
+  			marquee: {
+  				from: {
+  					transform: 'translateX(0)'
+  				},
+  				to: {
+  					transform: 'translateX(calc(-100% - var(--gap)))'
+  				}
+  			},
+  			'marquee-vertical': {
+  				from: {
+  					transform: 'translateY(0)'
+  				},
+  				to: {
+  					transform: 'translateY(calc(-100% - var(--gap)))'
+  				}
+  			}
+  		},
+  		animation: {
+  			marquee: 'marquee var(--duration) infinite linear',
+  			'marquee-vertical': 'marquee-vertical var(--duration) linear infinite'
+  		}
+  	},
+  	animation: {
+  		marquee: 'marquee var(--duration, 30s) linear infinite'
+  	},
+  	keyframes: {
+  		marquee: {
+  			to: {
+  				transform: 'translateX(-50%)'
   			}
   		}
   	}
